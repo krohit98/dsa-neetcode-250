@@ -1,0 +1,26 @@
+class Solution {
+    /**
+     * @param {number[]} people
+     * @param {number} limit
+     * @return {number}
+     */
+    numRescueBoats(people, limit) {
+        let count = 0;
+        people.sort((a,b)=>a-b); // 1,2,2,3,3 // 1,2,4,5 // 3,3,4,5
+        let start = 0;
+        let end = people.length-1;
+        while(start <= end){
+            let sum = people[start]+people[end];
+            if( sum <= limit){
+                start++;
+                end--;
+            }
+            else{
+                end--;
+            }
+            count++;
+        }
+        return count;
+    }
+
+}
