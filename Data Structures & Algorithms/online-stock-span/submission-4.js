@@ -1,0 +1,25 @@
+class StockSpanner {
+    constructor() {
+        this.stack = [];
+    }
+
+    /**
+     * @param {number} price
+     * @return {number}
+     */
+    next(price) {
+        let count = 1;
+        while(this.stack.length>0 && this.stack[this.stack.length-1][0]<=price){
+            count+=this.stack[this.stack.length-1][1];
+            this.stack.pop();
+        }
+        this.stack.push([price,count]);
+        return count;
+    }
+}
+
+/**
+ * Your StockSpanner object will be instantiated and called as such:
+ * var obj = new StockSpanner()
+ * var param_1 = obj.next(price)
+ */
