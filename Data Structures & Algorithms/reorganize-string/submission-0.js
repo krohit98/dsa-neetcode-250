@@ -1,0 +1,39 @@
+class Solution {
+    /**
+     * @param {string} s
+     * @return {string}
+     */
+    reorganizeString(s) {
+        let rearranged = "";
+
+        let stringFreq = {};
+        let maxFreq = 0;
+        for(let i=0;i<s.length;i++){
+            stringFreq[s[i]] = (stringFreq[s[i]] || 0) + 1;
+            maxFreq = Math.max(maxFreq, stringFreq[s[i]])
+        }
+
+        if(maxFreq > Math.ceil(s.length/2)) return rearranged;
+
+        let pq = new MaxPriorityQueue(char => char.freq);
+
+        for(const [char, freq] of Object.entries(stringFreq)) {
+            pq.enqueue({char, freq})
+        }
+        
+        let unavailableChar = null;
+
+        while(pq.size()) {
+            let top = pq.dequeue();
+            rearranged += top.char;
+            top.freq--;
+            if(unavailableChar){
+                pq.enqueue(unavailableChar);
+                unavailableChar = null;
+            }
+            if(top.freq) unavailableChar = top;
+        }
+
+        return rearranged;
+    }
+}
